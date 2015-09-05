@@ -18,11 +18,22 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
 
-        <Button
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Yora! login"
-            android:id="@+id/activity_login_login" />
+            android:layout_gravity="top"
+            android:padding="16dp">
+
+            <fragment
+                android:name="fragments.LoginFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                tools:layout="@layout/fragment_login"
+                android:id="@+id/activity_login_fragment"/>
+
+        </FrameLayout>
+
 
         <Button
             android:layout_width="match_parent"
@@ -30,17 +41,30 @@
             android:text="Yora! register"
             android:id="@+id/activity_login_register" />
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Facebook login"
-            android:id="@+id/activity_login_facebook" />
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Google login"
-            android:id="@+id/activity_login_google" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Facebook login"
+                android:id="@+id/activity_login_facebook"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Google login"
+                android:id="@+id/activity_login_google"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

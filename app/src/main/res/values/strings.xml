@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Yora</string>
+    <string name="title_activity_login_narrow">LoginNarrowActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

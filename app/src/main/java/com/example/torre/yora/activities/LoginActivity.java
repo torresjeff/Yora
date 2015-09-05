@@ -5,26 +5,32 @@ import com.example.torre.yora.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 
 public class LoginActivity extends BaseActivity
 {
+    private View loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        findViewById(R.id.activity_login_loginButton).setOnClickListener(new View.OnClickListener()
+        loginButton = findViewById(R.id.activity_login_login);
+
+        //When we're in tablet mode, this button won't appear. We can know in which mode we're in by finding the buttons.
+        if (loginButton != null) //if we're not in tablet mode
         {
-            @Override
-            public void onClick(View v)
+            loginButton.setOnClickListener(new View.OnClickListener()
             {
-                application.getAuth().getUser().setIsLoggedIn(true);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    application.getAuth().getUser().setIsLoggedIn(true);
+                    startActivity(new Intent(getApplicationContext(), LoginNarrowActivity.class));
+                }
+            });
+        }
+
     }
 }

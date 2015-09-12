@@ -1,10 +1,9 @@
 package com.example.torre.yora.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import com.example.torre.yora.R;
 
-import fragments.LoginFragment;
+import com.example.torre.yora.fragments.LoginFragment;
 
 public class LoginNarrowActivity extends BaseActivity implements LoginFragment.LoginCallback
 {

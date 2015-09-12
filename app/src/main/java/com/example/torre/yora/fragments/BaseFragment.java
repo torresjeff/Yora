@@ -1,4 +1,4 @@
-package fragments;
+package com.example.torre.yora.fragments;
 
 
 import android.app.Fragment;

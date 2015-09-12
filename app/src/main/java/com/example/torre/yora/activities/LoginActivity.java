@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import fragments.LoginFragment;
+import com.example.torre.yora.fragments.LoginFragment;
 
 
 public class LoginActivity extends BaseActivity implements LoginFragment.LoginCallback

@@ -25,7 +25,7 @@
             android:padding="16dp">
 
             <fragment
-                android:name="fragments.LoginFragment"
+                android:name="com.example.torre.yora.fragments.LoginFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"

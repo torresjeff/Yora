@@ -25,7 +25,6 @@ public class ExternalLoginActivity extends BaseActivity
         webView = (WebView)findViewById(R.id.activity_external_login_webView);
 
 
-
         testButton.setText("Login with " + getIntent().getStringExtra("EXTRA_EXTERNAL_SERVICE"));
         testButton.setOnClickListener(new View.OnClickListener()
         {

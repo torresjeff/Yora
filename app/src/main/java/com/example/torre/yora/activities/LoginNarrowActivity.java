@@ -13,8 +13,6 @@ public class LoginNarrowActivity extends BaseActivity implements LoginFragment.L
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_narrow);
-
-
     }
 
     @Override

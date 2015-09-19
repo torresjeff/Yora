@@ -14,12 +14,16 @@ public class LoginFragment extends BaseFragment
 {
     private Button loginButton;
 
+    //Interface that calls onLoggedIn when the user is logged in.
     private LoginCallback loginCallback;
 
     @Override
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
+
+        //We cast the Activity that this Fragment is living in
+        //so we can call the onLoggedIn method on it.
         loginCallback = (LoginCallback)activity;
     }
 
@@ -42,10 +46,12 @@ public class LoginFragment extends BaseFragment
         return v;
     }
 
+
     @Override
     public void onDetach()
     {
         super.onDetach();
+        //If we don't do this it can result in a memory leak (we keep a reference to an Activity that no longer exists)
         loginCallback = null;
     }
 

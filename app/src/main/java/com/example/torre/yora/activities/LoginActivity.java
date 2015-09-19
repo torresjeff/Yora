@@ -74,11 +74,14 @@ public class LoginActivity extends BaseActivity implements LoginFragment.LoginCa
 
     }
 
+    /**
+     * Starts the ExternalLoginActivity, to login with Facebook/Google.
+     * @param externalService name of the external service (eg. Facebook, Google).
+     */
     private void doExternalLogin(String externalService)
     {
         Intent intent = new Intent(this, ExternalLoginActivity.class);
         intent.putExtra(ExternalLoginActivity.EXTRA_EXTERNAL_SERVICE, externalService);
-
         startActivityForResult(intent, REQUEST_EXTERNAL_LOGIN);
     }
 
@@ -100,7 +103,6 @@ public class LoginActivity extends BaseActivity implements LoginFragment.LoginCa
 
     private void finishLogin()
     {
-
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

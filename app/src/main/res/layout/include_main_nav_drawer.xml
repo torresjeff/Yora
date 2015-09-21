@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="300dp"
+    android:id="@+id/nav_drawer"
+    android:background="#ffffff"
+    android:layout_gravity="start">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff831e">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/abc_ic_voice_search_api_mtrl_alpha"
+            android:id="@+id/include_main_nav_drawer_avatar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/include_main_nav_drawer_avatar"
+            android:layout_alignTop="@id/include_main_nav_drawer_avatar"
+            android:text="torres.jeffrey"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:id="@+id/include_main_nav_drawer_displayName"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/include_main_nav_drawer_topItemsContainer" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/include_main_nav_drawer_bottomItemsContainer"
+        android:background="#e3f2fd"/>
+
+</LinearLayout>

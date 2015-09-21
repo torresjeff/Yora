@@ -1,5 +1,9 @@
 package com.example.torre.yora.views;
 
+import android.view.View;
+import android.widget.Toast;
+
+import com.example.torre.yora.R;
 import com.example.torre.yora.activities.BaseActivity;
 import com.example.torre.yora.activities.MainActivity;
 
@@ -10,15 +14,23 @@ public class MainNavDrawer extends NavDrawer
 {
 
     //Add all items (NavDrawerItems) of the NavDrawer here
-    public MainNavDrawer(BaseActivity activity)
+    public MainNavDrawer(final BaseActivity activity)
     {
         super(activity);
 
-        //TODO: replace third parameter (null) with an actual badge text, replace android.R.drawable.sym_action_email with actual icon to be used, replace 0 with container to be used
-        addItem(new ActivityNavDrawerItem(MainActivity.class, "Timeline", null, android.R.drawable.sym_action_email, 0));
+        //TODO: replace third parameter (null) with an actual badge text, replace R.drawable.abc_btn_check_to_on_mtrl_015 with actual icon to be used, replace 0 with container to be used
+        addItem(new ActivityNavDrawerItem(MainActivity.class, "Timeline", "30", R.drawable.abc_btn_check_to_on_mtrl_000, R.id.include_main_nav_drawer_topItemsContainer));
 
-        //TODO: replace null with actual badge text, replace android.R.drawable.sym_action_chat with actual icon to be used, replace 0 with container to be used.
-        addItem(new BasicNavDrawerItem("Logout", null, android.R.drawable.sym_action_chat, 0));
+        //TODO: replace null with actual badge text, replace R.drawable.abc_btn_check_to_on_mtrl_015 with actual icon to be used, replace 0 with container to be used.
+        //Items that don't start Activities should override onClick() so that they don't stay selected eternally.
+        addItem(new BasicNavDrawerItem("Logout", null, R.drawable.abc_btn_check_to_on_mtrl_000, R.id.include_main_nav_drawer_bottomItemsContainer)
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(activity, "You logged out!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

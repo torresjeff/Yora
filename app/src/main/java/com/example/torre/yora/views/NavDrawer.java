@@ -45,8 +45,8 @@ public class NavDrawer
         }
 
         Toolbar toolbar = activity.getToolbar();
-        //TODO: remove this placeholder drawable
-        toolbar.setNavigationIcon(R.drawable.abc_btn_check_to_on_mtrl_000);
+
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -102,7 +102,6 @@ public class NavDrawer
         {
             item.inflate(inflater, navDrawerView);
         }
-
     }
 
     public static abstract class NavDrawerItem
@@ -155,8 +154,8 @@ public class NavDrawer
             badgeTextview = (TextView) view.findViewById(R.id.list_item_nav_drawer_badge);
             defaultTextColor = textView.getCurrentTextColor();
 
-            //TODO: remove placeholder resource
-            icon.setImageResource(R.drawable.notification_template_icon_bg);
+
+            icon.setImageResource(iconDrawable);
             textView.setText(text);
 
             //The badge is optional, if we have it then set the text. If not, make it invisible.

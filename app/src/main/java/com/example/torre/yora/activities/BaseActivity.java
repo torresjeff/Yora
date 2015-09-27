@@ -31,6 +31,7 @@ public class BaseActivity extends AppCompatActivity
 
         toolbar = (Toolbar)findViewById(R.id.include_toolbar);
 
+        //If we defined a toolbar, then set it as our action bar
         if (toolbar != null)
         {
             setSupportActionBar(toolbar);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 
 import com.example.torre.yora.R;
 import com.example.torre.yora.infrastructure.YoraApplication;
@@ -15,6 +16,7 @@ public class BaseActivity extends AppCompatActivity
     protected YoraApplication application;
     protected Toolbar toolbar;
     protected NavDrawer navDrawer;
+    protected  boolean isTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,6 +24,9 @@ public class BaseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         application = (YoraApplication)getApplication();
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        isTablet = (metrics.widthPixels/metrics.density) >= 600; //if this division is greater than 600, then we're in a tablet
     }
 
     @Override

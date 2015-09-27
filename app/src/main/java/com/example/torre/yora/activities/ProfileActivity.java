@@ -49,8 +49,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         avatarView = (ImageView) findViewById(R.id.activity_profile_avatar);
         avatarProgressFrame = findViewById(R.id.activity_profile_avatarProgressFrame);
-
-        tempOutputFile = new File(getExternalCacheDir(), "temp-img.jpg");
+        tempOutputFile = new File(getExternalCacheDir(), "temp-image.jpg");
 
         avatarView.setOnClickListener(this);
         findViewById(R.id.activity_profile_changeAvatar).setOnClickListener(this);
@@ -71,23 +70,22 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
     private void changeAvatar()
     {
-        List<Intent> imageCaptureIntents = new ArrayList<>();
-        List<ResolveInfo> imageCaptureActivities = getPackageManager().queryIntentActivities(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 0);
+        List<Intent> otherImageCaptureIntents = new ArrayList<>();
+        List<ResolveInfo> otherImageCaptureActivites = getPackageManager().queryIntentActivities(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 0);
 
-        for (ResolveInfo info : imageCaptureActivities)
+        for (ResolveInfo info : otherImageCaptureActivites)
         {
             Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             captureIntent.setClassName(info.activityInfo.packageName, info.activityInfo.name);
             captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempOutputFile));
-
-            imageCaptureIntents.add(captureIntent);
+            otherImageCaptureIntents.add(captureIntent);
         }
 
         Intent selectImageIntent = new Intent(Intent.ACTION_PICK);
         selectImageIntent.setType("image/*");
 
         Intent chooser = Intent.createChooser(selectImageIntent, "Choose avatar");
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, imageCaptureIntents.toArray(new Parcelable[imageCaptureActivities.size()]));
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, otherImageCaptureIntents.toArray(new Parcelable[otherImageCaptureIntents.size()]));
 
         startActivityForResult(chooser, REQUEST_SELECT_IMAGE);
     }
@@ -98,39 +96,33 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         if (resultCode != RESULT_OK)
         {
             tempOutputFile.delete();
-            Toast.makeText(this, "Error " + ProfileActivity.class.getSimpleName() + " onActivityResult", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "resultCode != RESULT_OK", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (requestCode == REQUEST_SELECT_IMAGE)
         {
-            Toast.makeText(this, "REQUEST_SELECT_IMAGE", Toast.LENGTH_SHORT).show();
-
             Uri outputFile;
-            Uri tempFile = Uri.fromFile(tempOutputFile);
+            Uri tempFileUri = Uri.fromFile(tempOutputFile);
 
-            //The user chose a picture from the gallery (didn't take a new one)
             if (data != null && (data.getAction() == null || !data.getAction().equals(MediaStore.ACTION_IMAGE_CAPTURE)))
-            {
-                Toast.makeText(this, "IMAGE CHOSEN FROM GALLERY", Toast.LENGTH_SHORT).show();
-
                 outputFile = data.getData();
-            }
-            else //The user took a new photo with the camera
-            {
-                Toast.makeText(this, "NEW PICTURE WITH CAMERA", Toast.LENGTH_SHORT).show();
-                outputFile = tempFile;
-            }
 
-            new Crop(outputFile).asSquare().output(tempFile).start(this);
+            else
+                outputFile = tempFileUri;
+
+            new Crop(outputFile)
+                    .asSquare()
+                    .output(tempFileUri)
+                    .start(this);
         }
-
+        //TODO: si no sirve probar con "if" en vez de "else if"
         else if (requestCode == Crop.REQUEST_CROP)
         {
-            /*Toast.makeText(this, "REQUEST_CROP", Toast.LENGTH_SHORT).show();
-            //TODO: send tempFile Uri to server as new avatar
-            //avatarView.setImageResource(0);
-            avatarView.setImageURI(Uri.fromFile(tempOutputFile));*/
+            Toast.makeText(this, "Crop.REQUEST_CROP", Toast.LENGTH_SHORT).show();
+            //TODO: send tempFileUri to server as new avatar
+            avatarView.setImageResource(0); //First, clear out the image that was previously there
+            avatarView.setImageURI(Uri.fromFile(tempOutputFile));
         }
     }
 

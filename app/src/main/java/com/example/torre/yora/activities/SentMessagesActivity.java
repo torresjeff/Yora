@@ -6,15 +6,13 @@ import com.example.torre.yora.R;
 import com.example.torre.yora.views.MainNavDrawer;
 
 
-public class MainActivity extends BaseAuthenticatedActivity
+public class SentMessagesActivity extends BaseAuthenticatedActivity
 {
 
     @Override
     protected void onYoraCreate(Bundle savedInstanceState)
     {
-        setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("Timeline");
-
+        setContentView(R.layout.activity_sent_messages);
         setNavDrawer(new MainNavDrawer(this));
     }
 }

@@ -2,4 +2,5 @@
 <resources>
     <color name="yora_header_background_color">#FFC107</color>
     <color name="dark_primary_color">#E65100</color>
+    <color name="list_item_nav_drawer_selected_item_textColor">#31d5e1</color>
 </resources>

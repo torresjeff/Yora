@@ -35,6 +35,7 @@ public class RegisterActivity extends BaseActivity
             @Override
             public void onClick(View v)
             {
+                //TODO: implement logic
                 application.getAuth().getUser().setIsLoggedIn(true);
                 setResult(RESULT_OK);
                 finish();

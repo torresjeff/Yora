@@ -8,6 +8,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity android:name=".activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.LoginActivity" />
+
         <activity
             android:name=".activities.LoginNarrowActivity"
             android:label="@string/title_activity_login_narrow"
@@ -24,8 +27,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.torre.yora.activities.BaseActivity" />
         </activity>
+
         <activity android:name=".activities.RegisterActivity" />
+
         <activity android:name=".activities.ExternalLoginActivity"/>
+
+        <activity android:name=".activities.ContactsActivity"/>
+
+        <activity android:name=".activities.ProfileActivity"/>
+
+        <activity android:name=".activities.SentMessagesActivity"/>
+
     </application>
 
 </manifest>

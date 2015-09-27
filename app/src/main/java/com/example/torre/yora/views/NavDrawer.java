@@ -147,7 +147,10 @@ public class NavDrawer
             }
 
             //list_item_nav_drawer is a layout that specifies how each list item will look (image, text, badge).
-            view = inflater.inflate(R.layout.list_item_nav_drawer, container);
+            view = inflater.inflate(R.layout.list_item_nav_drawer, container, false);
+
+            container.addView(view);
+
             //Each element of the previously defined layout. Each part that makes up a list item.
             icon = (ImageView) view.findViewById(R.id.list_item_nav_drawer_icon);
             textView = (TextView) view.findViewById(R.id.list_item_nav_drawer_text);

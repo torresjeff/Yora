@@ -48,4 +48,9 @@ public class BaseActivity extends AppCompatActivity
     {
         return toolbar;
     }
+
+    public YoraApplication getYoraApplication()
+    {
+        return application;
+    }
 }

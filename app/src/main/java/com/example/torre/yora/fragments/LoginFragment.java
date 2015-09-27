@@ -39,6 +39,8 @@ public class LoginFragment extends BaseFragment
             public void onClick(View v)
             {
                 application.getAuth().getUser().setIsLoggedIn(true);
+                //Dummy display name
+                application.getAuth().getUser().setDisplayName("torres.jeffrey");
                 loginCallback.onLoggedIn();
             }
         });

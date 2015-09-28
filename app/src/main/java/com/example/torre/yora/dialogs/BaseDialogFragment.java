@@ -1,25 +1,24 @@
-package com.example.torre.yora.fragments;
+package com.example.torre.yora.dialogs;
 
-
-import android.app.Fragment;
+import android.app.DialogFragment;
 import android.os.Bundle;
 
 import com.example.torre.yora.infrastructure.YoraApplication;
 import com.squareup.otto.Bus;
 
-public abstract class BaseFragment extends Fragment
+
+public abstract class BaseDialogFragment extends DialogFragment
 {
     protected YoraApplication application;
     protected Bus bus;
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        application = (YoraApplication)getActivity().getApplication();
+        application = (YoraApplication) getActivity().getApplication();
 
         bus = application.getBus();
+
         bus.register(this);
     }
 

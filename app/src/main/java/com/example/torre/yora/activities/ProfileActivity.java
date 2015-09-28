@@ -1,18 +1,26 @@
 package com.example.torre.yora.activities;
 
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.torre.yora.R;
+import com.example.torre.yora.dialogs.ChangePasswordDialog;
+import com.example.torre.yora.infrastructure.User;
 import com.example.torre.yora.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
 
@@ -23,6 +31,18 @@ import java.util.List;
 public class ProfileActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
     private static final int REQUEST_SELECT_IMAGE = 100;
+
+    private static final int STATE_VIEWING = 1;
+    private static final int STATE_EDITING = 2;
+
+    private static final String BUNDLE_STATE = "BUNDLE_STATE";
+
+    private int currentState;
+    private EditText displayNameText;
+    private EditText emailText;
+    private View changeAvatarButton;
+    private ActionMode editProfileActionMode;
+
     private ImageView avatarView;
     private View avatarProgressFrame;
     private File tempOutputFile;
@@ -49,12 +69,66 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         avatarView = (ImageView) findViewById(R.id.activity_profile_avatar);
         avatarProgressFrame = findViewById(R.id.activity_profile_avatarProgressFrame);
+        changeAvatarButton = findViewById(R.id.activity_profile_changeAvatar);
         tempOutputFile = new File(getExternalCacheDir(), "temp-image.jpg");
 
+        displayNameText = (EditText) findViewById(R.id.activity_profile_displayName);
+        emailText = (EditText) findViewById(R.id.activity_profile_email);
+
         avatarView.setOnClickListener(this);
-        findViewById(R.id.activity_profile_changeAvatar).setOnClickListener(this);
+        changeAvatarButton.setOnClickListener(this);
 
         avatarProgressFrame.setVisibility(View.GONE);
+
+        if (savedInstanceState == null)
+        {
+            User user = application.getAuth().getUser();
+            getSupportActionBar().setTitle(user.getDisplayName());
+            displayNameText.setText(user.getDisplayName());
+            emailText.setText(user.getEmail());
+
+            changeState(STATE_VIEWING); //default state
+        }
+        else
+        {
+            changeState(savedInstanceState.getInt(BUNDLE_STATE));
+        }
+    }
+
+    private void changeState(int state)
+    {
+        if (state == currentState)
+        {
+            return;
+        }
+
+        currentState = state;
+
+        if (state == STATE_VIEWING)
+        {
+            displayNameText.setEnabled(false);
+            emailText.setEnabled(false);
+            changeAvatarButton.setVisibility(View.VISIBLE);
+
+            if (editProfileActionMode != null)
+            {
+                editProfileActionMode.finish();
+                editProfileActionMode = null;
+            }
+        }
+
+        else if (state == STATE_EDITING)
+        {
+            displayNameText.setEnabled(true);
+            emailText.setEnabled(true);
+            changeAvatarButton.setVisibility(View.GONE);
+
+            editProfileActionMode = toolbar.startActionMode(new EditProfileActionCallback());
+        }
+        else
+        {
+            throw new IllegalArgumentException("Invalidad state " + state);
+        }
     }
 
     @Override
@@ -123,7 +197,86 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             //TODO: send tempFileUri to server as new avatar
             avatarView.setImageResource(0); //First, clear out the image that was previously there
             avatarView.setImageURI(Uri.fromFile(tempOutputFile));
+
         }
     }
 
+    private class EditProfileActionCallback implements ActionMode.Callback
+    {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        {
+            getMenuInflater().inflate(R.menu.activity_profile_edit, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+        {
+            int itemId = item.getItemId();
+
+            switch (itemId)
+            {
+                case R.id.activity_profile_edit_menuDone:
+                    //TODO: send request to update display name and email
+                    User user = application.getAuth().getUser();
+                    user.setDisplayName(displayNameText.getText().toString());
+                    user.setEmail(emailText.getText().toString());
+                    changeState(STATE_VIEWING);
+
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode)
+        {
+            //When we were editing but hit cancel
+            if (currentState != STATE_VIEWING)
+            {
+                changeState(STATE_VIEWING);
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case R.id.activity_profile_menuEdit:
+                changeState(STATE_EDITING);
+                return true;
+            case R.id.activity_profile_menuChangePassword:
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+                ChangePasswordDialog dialog = new ChangePasswordDialog();
+                dialog.show(transaction, null);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        savedInstanceState.putInt(BUNDLE_STATE, currentState);
+    }
 }

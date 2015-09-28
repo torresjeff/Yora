@@ -9,14 +9,16 @@ import android.util.DisplayMetrics;
 import com.example.torre.yora.R;
 import com.example.torre.yora.infrastructure.YoraApplication;
 import com.example.torre.yora.views.NavDrawer;
+import com.squareup.otto.Bus;
 
 
-public class BaseActivity extends AppCompatActivity
+public abstract class BaseActivity extends AppCompatActivity
 {
     protected YoraApplication application;
     protected Toolbar toolbar;
     protected NavDrawer navDrawer;
     protected  boolean isTablet;
+    protected Bus bus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,8 +27,20 @@ public class BaseActivity extends AppCompatActivity
 
         application = (YoraApplication)getApplication();
 
+        bus = application.getBus();
+
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         isTablet = (metrics.widthPixels/metrics.density) >= 600; //if this division is greater than 600, then we're in a tablet
+
+        bus.register(this);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        bus.unregister(this);
     }
 
     @Override

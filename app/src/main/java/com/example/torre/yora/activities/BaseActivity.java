@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 
 import com.example.torre.yora.R;
+import com.example.torre.yora.infrastructure.ActionScheduler;
 import com.example.torre.yora.infrastructure.YoraApplication;
 import com.example.torre.yora.views.NavDrawer;
 import com.squareup.otto.Bus;
@@ -20,19 +21,37 @@ public abstract class BaseActivity extends AppCompatActivity
     protected boolean isTablet;
     protected Bus bus;
 
+
+
+    protected ActionScheduler scheduler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
         application = (YoraApplication)getApplication();
-
         bus = application.getBus();
+        scheduler = new ActionScheduler(application);
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         isTablet = (metrics.widthPixels/metrics.density) >= 600; //if this division is greater than 600, then we're in a tablet
 
         bus.register(this);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        scheduler.onPause();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        scheduler.onResume();
     }
 
     @Override
@@ -76,5 +95,10 @@ public abstract class BaseActivity extends AppCompatActivity
     public YoraApplication getYoraApplication()
     {
         return application;
+    }
+
+    public ActionScheduler getScheduler()
+    {
+        return scheduler;
     }
 }

@@ -38,6 +38,13 @@
 
         <activity android:name=".activities.SentMessagesActivity"/>
 
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
+        <activity android:name=".activities.AuthenticationActivity" />
+
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
 </manifest>

@@ -146,6 +146,13 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
+    @Subscribe
+    public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
+    {
+        //Change our username in the action bar when we update our details
+        getSupportActionBar().setTitle(event.user.getDisplayName());
+    }
+
     @Override
     public void onClick(View view)
     {
@@ -208,7 +215,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         else if (requestCode == Crop.REQUEST_CROP)
         {
-            Toast.makeText(this, "Crop.REQUEST_CROP", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Crop.REQUEST_CROP", Toast.LENGTH_SHORT).show();
             //TODO: send tempFileUri to server as new avatar
             avatarProgressFrame.setVisibility(View.VISIBLE);
 
@@ -343,4 +350,5 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     {
         savedInstanceState.putInt(BUNDLE_STATE, currentState);
     }
+
 }

@@ -15,7 +15,18 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity
 
         if (!application.getAuth().getUser().isLoggedIn())
         {
-            startActivity(new Intent(this, LoginActivity.class));
+            //If we HAVE a login token, then try automatically logging in with our local token
+            if (application.getAuth().hasAuthToken())
+            {
+                Intent intent = new Intent(this, AuthenticationActivity.class); //AuthenticationActivity is jut an Activity that tries to relog us in automatically
+                intent.putExtra(AuthenticationActivity.EXTRA_RETURN_TO_ACTIVITY, getClass().getName());
+                startActivity(intent);
+            }
+            else //if we don't have a login token, then we must login again
+            {
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+
             finish();
             return;
         }

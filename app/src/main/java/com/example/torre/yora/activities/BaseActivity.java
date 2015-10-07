@@ -17,7 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity
     protected YoraApplication application;
     protected Toolbar toolbar;
     protected NavDrawer navDrawer;
-    protected  boolean isTablet;
+    protected boolean isTablet;
     protected Bus bus;
 
     @Override
@@ -41,6 +41,11 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onDestroy();
 
         bus.unregister(this);
+
+        if (navDrawer != null)
+        {
+            navDrawer.destroy();
+        }
     }
 
     @Override

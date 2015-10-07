@@ -20,6 +20,7 @@ public class LoginActivity extends BaseActivity implements LoginFragment.LoginCa
     private View facebookLoginButton;
     private View googleLoginButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -106,6 +107,7 @@ public class LoginActivity extends BaseActivity implements LoginFragment.LoginCa
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
+
 
     @Override
     public void onLoggedIn()

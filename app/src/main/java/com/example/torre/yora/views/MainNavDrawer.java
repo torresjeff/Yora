@@ -13,6 +13,8 @@ import com.example.torre.yora.activities.MainActivity;
 import com.example.torre.yora.activities.ProfileActivity;
 import com.example.torre.yora.activities.SentMessagesActivity;
 import com.example.torre.yora.infrastructure.User;
+import com.example.torre.yora.services.Account;
+import com.squareup.otto.Subscribe;
 
 /**
  * MainNavDrawer is a concrete implementation of a NavDrawer. In its constructor we add all the items our NavDrawer is going to use.
@@ -41,7 +43,7 @@ public class MainNavDrawer extends NavDrawer
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(activity, "You logged out!", Toast.LENGTH_SHORT).show();
+                activity.getYoraApplication().getAuth().logout();
             }
         });
 
@@ -53,5 +55,12 @@ public class MainNavDrawer extends NavDrawer
         displayName.setText(loggedInUser.getDisplayName());
 
         //TODO: change avatar image to avatar URL from loggedInUser
+    }
+
+    @Subscribe
+    public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
+    {
+        //TODO: update avatar URL
+        displayName.setText(event.user.getDisplayName());
     }
 }

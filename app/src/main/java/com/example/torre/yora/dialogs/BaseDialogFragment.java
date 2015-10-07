@@ -11,6 +11,7 @@ public abstract class BaseDialogFragment extends DialogFragment
 {
     protected YoraApplication application;
     protected Bus bus;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {

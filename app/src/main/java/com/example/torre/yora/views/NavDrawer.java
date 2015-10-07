@@ -55,6 +55,9 @@ public class NavDrawer
                 setOpen(!isOpen());
             }
         });
+
+        activity.getYoraApplication().getBus().register(this);
+
     }
 
     public void addItem(NavDrawerItem item)
@@ -103,7 +106,12 @@ public class NavDrawer
             item.inflate(inflater, navDrawerView);
         }
     }
-
+    
+    public void destroy()
+    {
+        activity.getYoraApplication().getBus().unregister(this);
+    }
+    
     public static abstract class NavDrawerItem
     {
         protected NavDrawer navDrawer;

@@ -3,4 +3,8 @@
     <color name="yora_header_background_color">#FFC107</color>
     <color name="dark_primary_color">#E65100</color>
     <color name="list_item_nav_drawer_selected_item_textColor">#31d5e1</color>
+    <color name="contacts_pending_contact_requests">#607d8b</color>
+    <color name="list_item_message_background_selected">#8c9efe</color>
+    <color name="list_item_message_background">#eeeeee</color>
+    <color name="list_item_message_background_unread">#fff2cf</color>
 </resources>

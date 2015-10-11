@@ -27,6 +27,7 @@ import com.example.torre.yora.services.Account;
 import com.example.torre.yora.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -90,10 +91,13 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         avatarProgressFrame.setVisibility(View.GONE);
 
+        User user = application.getAuth().getUser();
+        getSupportActionBar().setTitle(user.getDisplayName());
+
+        Picasso.with(this).load(user.getAvatarUrl()).into(avatarView);
+
         if (savedInstanceState == null)
         {
-            User user = application.getAuth().getUser();
-            getSupportActionBar().setTitle(user.getDisplayName());
             displayNameText.setText(user.getDisplayName());
             emailText.setText(user.getEmail());
 
@@ -151,6 +155,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     {
         //Change our username in the action bar when we update our details
         getSupportActionBar().setTitle(event.user.getDisplayName());
+        Picasso.with(this).load(event.user.getAvatarUrl()).into(avatarView);
     }
 
     @Override

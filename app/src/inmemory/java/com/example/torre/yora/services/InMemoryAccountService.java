@@ -3,7 +3,11 @@ package com.example.torre.yora.services;
 import com.example.torre.yora.infrastructure.Auth;
 import com.example.torre.yora.infrastructure.User;
 import com.example.torre.yora.infrastructure.YoraApplication;
+import com.example.torre.yora.services.entities.Message;
+import com.example.torre.yora.services.entities.UserDetails;
 import com.squareup.otto.Subscribe;
+
+import java.util.Calendar;
 
 public class InMemoryAccountService extends BaseInMemoryService
 {
@@ -80,10 +84,16 @@ public class InMemoryAccountService extends BaseInMemoryService
             public void run()
             {
                 Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
-                loginUser(response);
+                loginUser(new Account.UserResponse());
                 bus.post(response);
             }
         }, 1000, 2000);
+    }
+
+    @Subscribe
+    public void updateGcmRegistration(Account.UpdateGcmRegistrationRequest request)
+    {
+        postDelayed(new Account.UpdateGcmRegistrationResponse());
     }
 
     @Subscribe
@@ -168,5 +178,20 @@ public class InMemoryAccountService extends BaseInMemoryService
         response.avatarUrl = user.getAvatarUrl();
         response.id = user.getId();
         response.authToken = auth.getAuthToken();
+    }
+
+    @Subscribe
+    public void markMessageAsRead(Messages.MarkMessageAsReadRequest request)
+    {
+        postDelayed(new Messages.MarkMessageAsReadResponse());
+    }
+
+    @Subscribe
+    public void getMessageDetails(Messages.GetMessageDetailsRequest request)
+    {
+        Messages.GetMessageDetailsResponse response = new Messages.GetMessageDetailsResponse();
+        response.message = new Message(1, Calendar.getInstance(), "Short message", "Long message", null, new UserDetails(1, true, "Display name", "Username", ""), false, false);
+
+        postDelayed(response);
     }
 }

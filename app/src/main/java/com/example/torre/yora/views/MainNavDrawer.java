@@ -15,6 +15,7 @@ import com.example.torre.yora.activities.SentMessagesActivity;
 import com.example.torre.yora.infrastructure.User;
 import com.example.torre.yora.services.Account;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 /**
  * MainNavDrawer is a concrete implementation of a NavDrawer. In its constructor we add all the items our NavDrawer is going to use.
@@ -55,12 +56,14 @@ public class MainNavDrawer extends NavDrawer
         displayName.setText(loggedInUser.getDisplayName());
 
         //TODO: change avatar image to avatar URL from loggedInUser
+        Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatar);
     }
 
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
     {
         //TODO: update avatar URL
+        Picasso.with(activity).load(event.user.getAvatarUrl()).into(avatar);
         displayName.setText(event.user.getDisplayName());
     }
 }

@@ -24,7 +24,7 @@ public class InMemoryContactsService extends BaseInMemoryService
 
         for (int i = 0; i < 3; ++i)
         {
-            response.requests.add(new ContactRequest(i, request.fromUs, createFakeUser(i, false), new GregorianCalendar()));
+            response.requests.add(new ContactRequest(request.fromUs, createFakeUser(i, false), new GregorianCalendar()));
         }
 
         postDelayed(response);
@@ -32,7 +32,7 @@ public class InMemoryContactsService extends BaseInMemoryService
     }
 
     @Subscribe
-    public void getContacts(Contacts.GetContactRequestsRequest request)
+    public void getContacts(Contacts.GetContactsRequest request)
     {
         Contacts.GetContactsResponse response = new Contacts.GetContactsResponse();
         response.contacts = new ArrayList<>();
@@ -42,7 +42,7 @@ public class InMemoryContactsService extends BaseInMemoryService
             response.contacts.add(createFakeUser(i, true));
         }
 
-        postDelayed(response);
+        postDelayed(response, 5000);
     }
 
     @Subscribe
@@ -63,6 +63,30 @@ public class InMemoryContactsService extends BaseInMemoryService
     public void respondToContactRequest(Contacts.RespondToContactRequestRequest request)
     {
         postDelayed(new Contacts.RespondToContactRequestResponse());
+    }
+
+    @Subscribe
+    public void removeContact(Contacts.RemoveContactRequest request)
+    {
+        Contacts.RemoveContactResponse response = new Contacts.RemoveContactResponse();
+        response.removedContactId = request.contactId;
+        postDelayed(response);
+    }
+
+    @Subscribe
+    public void searchUsers(Contacts.SearchUsersRequest request)
+    {
+        Contacts.SearchUsersResponse response = new Contacts.SearchUsersResponse();
+        response.users = new ArrayList<>();
+        response.query = request.query;
+
+        //Create fake users
+        for (int i = 0; i < request.query.length(); ++i)
+        {
+            response.users.add(createFakeUser(i, false));
+        }
+
+        postDelayed(response, 2000, 3000);
     }
 
     private UserDetails createFakeUser(int id, boolean isContact)

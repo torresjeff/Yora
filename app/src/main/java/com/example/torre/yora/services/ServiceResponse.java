@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Every Response class will inherit from this class. It stores additional information about the response (errors, succeeded, etc.)
@@ -19,6 +20,7 @@ public class ServiceResponse
     private boolean isCritical; //The operation failed due to an invalid state or a bug in the code. Eg. not connected to the network, the API is down.
                                 //Things that you should fix yourself or wait to try again.
                                 //Critical: we messed up. Non-critical: you messed up
+    private TreeMap<String, String> propertyErrorsCaseInsensitive;
 
     public ServiceResponse()
     {
@@ -56,6 +58,12 @@ public class ServiceResponse
         this.isCritical = isCritical;
     }
 
+    public void setCriticalError(String criticalError)
+    {
+        isCritical = true;
+        operationError = criticalError;
+    }
+
     public void setPropertyError(String property, String error)
     {
         propertyErrors.put(property, error);
@@ -63,7 +71,12 @@ public class ServiceResponse
 
     public String getPropertyError(String property)
     {
-        return propertyErrors.get(property);
+        if (propertyErrorsCaseInsensitive == null || propertyErrorsCaseInsensitive.size() != propertyErrors.size())
+        {
+            propertyErrorsCaseInsensitive = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+            propertyErrorsCaseInsensitive.putAll(propertyErrors);
+        }
+        return propertyErrorsCaseInsensitive.get(property);
     }
 
     public boolean succeeded()

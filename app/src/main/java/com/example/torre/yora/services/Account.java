@@ -35,7 +35,7 @@ public final class Account
         }
     }
 
-    public static class LoginWithUsernameResponse extends UserResponse
+    public static class LoginWithUsernameResponse extends ServiceResponse
     {
     }
 
@@ -129,6 +129,7 @@ public final class Account
 
     public static class ChangeAvatarResponse extends ServiceResponse
     {
+        public String avatarUrl;
     }
 
     public static class UpdateProfileRequest
@@ -146,6 +147,8 @@ public final class Account
 
     public static class UpdateProfileResponse extends  ServiceResponse
     {
+        public String displayName;
+        public String email;
     }
 
     public static class ChangePasswordRequest
@@ -174,5 +177,21 @@ public final class Account
         {
             this.user = user;
         }
+    }
+
+    //GCM is Google's push notification API.
+    //The device has to register with google play services, and then tell out server what the registration ID, so our server can send a push notification.
+    public static class UpdateGcmRegistrationRequest
+    {
+        public String registrationId;
+
+        public UpdateGcmRegistrationRequest(String registrationId)
+        {
+            this.registrationId = registrationId;
+        }
+    }
+
+    public static class UpdateGcmRegistrationResponse extends ServiceResponse
+    {
     }
 }

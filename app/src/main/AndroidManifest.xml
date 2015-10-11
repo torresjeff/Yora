@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.torre.yora" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".infrastructure.YoraApplication"
         android:allowBackup="true"
@@ -34,6 +36,10 @@
 
         <activity android:name=".activities.ContactsActivity"/>
 
+        <activity android:name=".activities.ContactActivity" />
+
+        <activity android:name=".activities.AddContactActivity" android:theme="@style/AddContactTheme"/>
+
         <activity android:name=".activities.ProfileActivity"/>
 
         <activity android:name=".activities.SentMessagesActivity"/>
@@ -41,6 +47,14 @@
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
         <activity android:name=".activities.AuthenticationActivity" />
+
+        <activity android:name=".activities.MessageActivity" />
+
+        <activity android:name=".activities.NewMessageActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.SelectContactActivity" />
+
+        <activity android:name=".activities.SendMessageActivity" />
 
     </application>
 

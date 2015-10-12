@@ -146,7 +146,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
         else
         {
-            throw new IllegalArgumentException("Invalidad state " + state);
+            throw new IllegalArgumentException("Invalid state " + state);
         }
     }
 

@@ -142,7 +142,6 @@ public final class Account
             this.displayName = displayName;
             this.email = email;
         }
-
     }
 
     public static class UpdateProfileResponse extends  ServiceResponse

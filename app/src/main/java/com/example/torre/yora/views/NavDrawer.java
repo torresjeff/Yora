@@ -106,12 +106,12 @@ public class NavDrawer
             item.inflate(inflater, navDrawerView);
         }
     }
-    
+
     public void destroy()
     {
         activity.getYoraApplication().getBus().unregister(this);
     }
-    
+
     public static abstract class NavDrawerItem
     {
         protected NavDrawer navDrawer;
@@ -294,5 +294,4 @@ public class NavDrawer
             navDrawer.activity.finish();
         }
     }
-
 }

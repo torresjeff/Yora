@@ -189,7 +189,7 @@ public class NavDrawer
             {
                 //Sets the background of the selected item, to the one specified by R.drawable.list_item_nav_drawer_selected_item_background.
                 view.setBackgroundResource(R.drawable.list_item_nav_drawer_selected_item_background);
-                //TODO: change this color to something that matches the yellow/orange color
+
                 textView.setTextColor(navDrawer.activity.getResources().getColor(R.color.list_item_nav_drawer_selected_item_textColor));
             }
             else

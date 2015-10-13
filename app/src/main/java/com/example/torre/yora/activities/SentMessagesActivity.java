@@ -32,6 +32,7 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
         getSupportActionBar().setTitle("Sent messages");
 
         adapter = new MessagesAdapter(this, this);
+        messages = new ArrayList<>();
         messages = adapter.getMessages();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.activity_sent_messages_messages);

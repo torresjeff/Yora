@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.torre.yora.fragments.LoginFragment;
+import com.example.torre.yora.fragments.RegisterGcmFragment;
 
 
 public class LoginActivity extends BaseActivity implements LoginFragment.LoginCallback
@@ -98,7 +99,15 @@ public class LoginActivity extends BaseActivity implements LoginFragment.LoginCa
                 requestCode == REQUEST_REGISTER ||
                 requestCode == REQUEST_EXTERNAL_LOGIN)
         {
-            finishLogin();
+            RegisterGcmFragment.get(new RegisterGcmFragment.GcmRegistrationCallback()
+            {
+                @Override
+                public void gcmFinished()
+                {
+                    finishLogin();
+                }
+            }, requestCode == REQUEST_REGISTER, getFragmentManager());
+
         }
     }
 

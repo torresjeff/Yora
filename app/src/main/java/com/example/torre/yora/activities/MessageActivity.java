@@ -14,9 +14,11 @@ import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.torre.yora.R;
+import com.example.torre.yora.services.Events;
 import com.example.torre.yora.services.Messages;
 import com.example.torre.yora.services.entities.Message;
 import com.example.torre.yora.services.entities.UserDetails;
@@ -154,7 +156,9 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
 
         if (message.getImageUrl() != null && !message.getImageUrl().isEmpty())
         {
-            //TODO: load image
+            ImageView image = (ImageView) findViewById(R.id.activity_message_image);
+
+            application.getAuthedPicasso().load(message.getImageUrl()).into(image);
         }
 
         invalidateOptionsMenu();
@@ -282,5 +286,19 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
         currentAnimation.setDuration(300);
         currentAnimation.play(translateAnimator).with(colorAnimator);
         currentAnimation.start();
+    }
+
+
+    @Subscribe
+    public void onNotification(Events.OnNotificationReceivedEvent event)
+    {
+        if (currentMessage == null) //We haven't loaded the current message yet, so ignore the notification.
+        {
+            return;
+        }
+        if (event.operationType == Events.OPERATION_DELETED && event.entityType == Events.ENTITY_MESSAGE && event.entityId == currentMessage.getId())
+        {
+            closeMessage(REQUEST_IMAGE_DELETED);
+        }
     }
 }

@@ -55,7 +55,6 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
         switch(id)
         {
             case AlertDialog.BUTTON_POSITIVE:
-                //TODO: send new password to server
                 progressDialog = new ProgressDialog.Builder(getActivity())
                         .setTitle("Updating password")
                         .setCancelable(false)

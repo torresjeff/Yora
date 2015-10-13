@@ -105,11 +105,11 @@ public final class Account
         public String token;
         public String clientId;
 
-        public LoginWithExternalTokenRequest(String provider, String token, String clientId)
+        public LoginWithExternalTokenRequest(String provider, String token)
         {
             this.provider = provider;
             this.token = token;
-            this.clientId = clientId;
+            this.clientId = "android";
         }
     }
 

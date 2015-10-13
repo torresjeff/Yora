@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.torre.yora.R;
+import com.example.torre.yora.fragments.RegisterGcmFragment;
 import com.example.torre.yora.infrastructure.Auth;
 import com.example.torre.yora.services.Account;
 import com.squareup.otto.Subscribe;
 
-public class AuthenticationActivity extends BaseActivity
+public class AuthenticationActivity extends BaseActivity implements RegisterGcmFragment.GcmRegistrationCallback
 {
 
     private Auth auth;
@@ -48,6 +49,12 @@ public class AuthenticationActivity extends BaseActivity
             return;
         }
 
+        RegisterGcmFragment.get(this, false, getFragmentManager());
+    }
+
+    @Override
+    public void gcmFinished()
+    {
         Intent intent;
         String returnTo = getIntent().getStringExtra(EXTRA_RETURN_TO_ACTIVITY);
 

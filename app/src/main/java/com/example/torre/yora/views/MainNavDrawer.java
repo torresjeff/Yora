@@ -37,7 +37,6 @@ public class MainNavDrawer extends NavDrawer
         addItem(new ActivityNavDrawerItem(ContactsActivity.class, "Contacts", null, R.drawable.ic_group_black_36dp, R.id.include_main_nav_drawer_topItemsContainer));
         addItem(new ActivityNavDrawerItem(ProfileActivity.class, "Profile", null, R.drawable.ic_person_pin_black_36dp, R.id.include_main_nav_drawer_topItemsContainer));
 
-        //TODO: replace null with actual badge text, replace R.drawable.abc_btn_check_to_on_mtrl_015 with actual icon to be used, replace 0 with container to be used.
         //Items that don't start Activities should override onClick() so that they don't stay selected eternally.
         addItem(new BasicNavDrawerItem("Logout", null, R.drawable.ic_close_black_24dp, R.id.include_main_nav_drawer_bottomItemsContainer)
         {
@@ -55,14 +54,13 @@ public class MainNavDrawer extends NavDrawer
 
         displayName.setText(loggedInUser.getDisplayName());
 
-        //TODO: change avatar image to avatar URL from loggedInUser
+
         Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatar);
     }
 
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
     {
-        //TODO: update avatar URL
         Picasso.with(activity).load(event.user.getAvatarUrl()).into(avatar);
         displayName.setText(event.user.getDisplayName());
     }

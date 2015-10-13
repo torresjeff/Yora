@@ -197,7 +197,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         if (resultCode != RESULT_OK)
         {
             tempOutputFile.delete();
-            Toast.makeText(this, "resultCode != RESULT_OK", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -220,8 +219,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         else if (requestCode == Crop.REQUEST_CROP)
         {
-            //Toast.makeText(this, "Crop.REQUEST_CROP", Toast.LENGTH_SHORT).show();
-            //TODO: send tempFileUri to server as new avatar
             avatarProgressFrame.setVisibility(View.VISIBLE);
 
             bus.post(new Account.ChangeAvatarRequest(Uri.fromFile(tempOutputFile)));
@@ -296,12 +293,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             switch (itemId)
             {
                 case R.id.activity_profile_edit_menuDone:
-                    //TODO: send request to update display name and email
-                    /*
-                    We replace this with an event post. Only when the request succeeds we change our info.
-                    User user = application.getAuth().getUser();
-                    user.setDisplayName(displayNameText.getText().toString());
-                    user.setEmail(emailText.getText().toString());*/
                     setProgressBarVisible(true);
                     changeState(STATE_VIEWING);
                     bus.post(new Account.UpdateProfileRequest(displayNameText.getText().toString(),

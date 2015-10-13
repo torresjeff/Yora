@@ -147,7 +147,7 @@ public final class Messages
         }
     }
 
-    public static class MarkMessageAsReadResponse
+    public static class MarkMessageAsReadResponse extends ServiceResponse
     {
     }
 

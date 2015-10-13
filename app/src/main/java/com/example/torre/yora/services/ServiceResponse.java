@@ -5,18 +5,24 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
  * Every Response class will inherit from this class. It stores additional information about the response (errors, succeeded, etc.)
  */
-public class ServiceResponse
+public abstract class ServiceResponse
 {
     private static final String TAG = "ServiceResponse";
 
+    @SerializedName("operationError")
     private String operationError; //Error that occurs on an operation wide scale. Eg. image failing to upload due to it not being in the proper format.
+
+    @SerializedName("propertyErrors")
     private HashMap<String, String> propertyErrors;  //Validation errors. Eg. display name too long, email wasn't correctly formatted.
+
     private boolean isCritical; //The operation failed due to an invalid state or a bug in the code. Eg. not connected to the network, the API is down.
                                 //Things that you should fix yourself or wait to try again.
                                 //Critical: we messed up. Non-critical: you messed up

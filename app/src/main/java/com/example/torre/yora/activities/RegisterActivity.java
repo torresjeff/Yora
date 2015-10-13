@@ -1,6 +1,7 @@
 package com.example.torre.yora.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +13,20 @@ import com.squareup.otto.Subscribe;
 
 public class RegisterActivity extends BaseActivity
 {
+    public static final String EXTRA_EXTERNAL_PROVIDER = "EXTRA_EXTERNAL_PROVIDER";
+    public static final String EXTRA_EXTERNAL_USERNAME = "EXTRA_EXTERNAL_USERNAME";
+    public static final String EXTRA_EXTERNAL_TOKEN = "EXTRA_EXTERNAL_TOKEN";
+
     private EditText userName;
     private EditText email;
     private EditText password;
     private Button registerButton;
     private View progressBar;
     private String defaultRegisterButtonText;
+
+    private boolean isExternalLogin;
+    private String externalToken;
+    private String externalProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,9 +55,28 @@ public class RegisterActivity extends BaseActivity
                 userName.setEnabled(false);
                 password.setEnabled(false);
                 email.setEnabled(false);
-                bus.post(new Account.RegisterRequest(userName.getText().toString(), password.getText().toString(), email.getText().toString()));
+
+                if (isExternalLogin)
+                {
+                    bus.post(new Account.RegisterWithExternalTokenRequest(userName.getText().toString(), email.getText().toString(), externalProvider, externalToken));
+                }
+                else
+                {
+                    bus.post(new Account.RegisterRequest(userName.getText().toString(), email.getText().toString(), password.getText().toString()));
+                }
             }
         });
+
+        Intent intent = getIntent();
+        externalToken = intent.getStringExtra(EXTRA_EXTERNAL_TOKEN);
+        externalProvider = intent.getStringExtra(EXTRA_EXTERNAL_PROVIDER);
+        isExternalLogin = externalToken != null;
+
+        if (isExternalLogin)
+        {
+            password.setVisibility(View.GONE);
+            userName.setText(intent.getStringExtra(EXTRA_EXTERNAL_USERNAME));
+        }
     }
 
     @Subscribe
